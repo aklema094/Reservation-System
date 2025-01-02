@@ -53,26 +53,33 @@ public class ReservationSystem {
                         sc.nextLine();
                         System.out.print("Enter Name : ");
                         String name = sc.nextLine();
-                        GetRoom(st, sc,id,name);
+                        GetRoom(st, sc, id, name);
+                        System.out.println("");
+                        break;
+                    case 4 :
+                        updateReservation(st,sc);
                         System.out.println("");
                         break;
                     case 5:
                         System.out.print("Enter Id : ");
                         int pId = sc.nextInt();
-                        deleteReservation(st,pId);
+                        deleteReservation(st, pId);
                         System.out.println("");
                         break;
-      
+
                     default:
                         System.out.println("Invalid Choice!!!, Try again.");
                         break;
                 }
             }
+           
+            
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
-
+      sc.close();
+      
     }
 
     // room reserve
@@ -147,19 +154,50 @@ public class ReservationSystem {
         }
 
     }
-    
-    // delete reservation 
-    public static void deleteReservation(Statement st, int id) throws SQLException{
-        
-        int r = st.executeUpdate("DELETE FROM reservationn WHERE id = '"+id+"';");
-        
-        if(r>0){
-            System.out.println("Record deleted successfully");
+
+    // update reservation
+    public static void updateReservation(Statement st, Scanner sc) throws SQLException {
+        System.out.print("Enter Id : ");
+        int id = sc.nextInt();
+        sc.nextLine();
+        if(isValidId(st,id)){
+            System.out.print("Enter new Name : ");
+            String name = sc.nextLine();
+            System.out.print("Enter new room no : ");
+            int room = sc.nextInt();
+            sc.nextLine();
+            System.out.print("Enter new Contact : ");
+            int con = sc.nextInt();
+            int r = st.executeUpdate("UPDATE reservationn SET name = '"+name+"',roomNo = '"+room+"', contactNo = '"+con+"' WHERE id ='"+id+"';");
+            if(r>0){
+                System.out.println("Updated Successfully");
+            }else{
+                System.out.println("Failed to update data!!! Please Try again.");
+            }
         }else{
+            System.out.println("Enter Valid ID.");
+        }
+    }
+    
+    public static boolean isValidId(Statement st, int id) throws SQLException{
+        ResultSet rs = st.executeQuery("SELECT * FROM reservationn WHERE id = '"+id+"';");
+        if(rs.next()){
+            return true;
+        }
+        return false;
+    }
+
+    // delete reservation 
+    public static void deleteReservation(Statement st, int id) throws SQLException {
+
+        int r = st.executeUpdate("DELETE FROM reservationn WHERE id = '" + id + "';");
+
+        if (r > 0) {
+            System.out.println("Record deleted successfully");
+        } else {
             System.out.println("Failed to delete data");
         }
-        
-        
+
     }
 
 }
