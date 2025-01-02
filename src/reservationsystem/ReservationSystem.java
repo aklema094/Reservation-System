@@ -34,6 +34,7 @@ public class ReservationSystem {
                 System.out.println("4. Update Reservation");
                 System.out.println("5. Delete Reservation");
                 System.out.println("6. Exit");
+                System.out.println("");
                 System.out.print("Choose an option : ");
                 int choice = sc.nextInt();
                 sc.nextLine();
@@ -55,7 +56,13 @@ public class ReservationSystem {
                         GetRoom(st, sc,id,name);
                         System.out.println("");
                         break;
-
+                    case 5:
+                        System.out.print("Enter Id : ");
+                        int pId = sc.nextInt();
+                        deleteReservation(st,pId);
+                        System.out.println("");
+                        break;
+      
                     default:
                         System.out.println("Invalid Choice!!!, Try again.");
                         break;
@@ -132,12 +139,27 @@ public class ReservationSystem {
                 int room = rs.getInt("roomNo");
                 System.out.println("Room number is : " + room);
             } else {
+                System.out.println("");
                 System.out.println("Invalid information!!!, Try again.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
 
+    }
+    
+    // delete reservation 
+    public static void deleteReservation(Statement st, int id) throws SQLException{
+        
+        int r = st.executeUpdate("DELETE FROM reservationn WHERE id = '"+id+"';");
+        
+        if(r>0){
+            System.out.println("Record deleted successfully");
+        }else{
+            System.out.println("Failed to delete data");
+        }
+        
+        
     }
 
 }
