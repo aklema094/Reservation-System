@@ -46,6 +46,15 @@ public class ReservationSystem {
                         viewReservation(st);
                         System.out.println("");
                         break;
+                    case 3:
+                        System.out.print("Enter Id : ");
+                        int id = sc.nextInt();
+                        sc.nextLine();
+                        System.out.print("Enter Name : ");
+                        String name = sc.nextLine();
+                        GetRoom(st, sc,id,name);
+                        System.out.println("");
+                        break;
 
                     default:
                         System.out.println("Invalid Choice!!!, Try again.");
@@ -91,6 +100,7 @@ public class ReservationSystem {
         return true;
     }
 
+    // view reservations
     public static void viewReservation(Statement st) {
 
         try {
@@ -109,6 +119,23 @@ public class ReservationSystem {
             System.out.println("+-----+---------------------+----------+----------------+-------------------------+");
         } catch (SQLException e) {
 
+        }
+
+    }
+
+    // get room number 
+    public static void GetRoom(Statement st, Scanner sc, int id, String name) {
+
+        try {
+            ResultSet rs = st.executeQuery("SELECT * FROM reservationn WHERE id = '" + id + "' AND name = '" + name + "' ;");
+            if (rs.next()) {
+                int room = rs.getInt("roomNo");
+                System.out.println("Room number is : " + room);
+            } else {
+                System.out.println("Invalid information!!!, Try again.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
 
     }
