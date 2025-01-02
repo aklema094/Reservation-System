@@ -9,15 +9,12 @@ import java.sql.ResultSet;
 
 public class ReservationSystem {
 
-    public static void main(String[] args) throws ClassNotFoundException, SQLException {
+    public static void main(String[] args) throws ClassNotFoundException, SQLException, InterruptedException {
         Scanner sc = new Scanner(System.in);
         String url = "jdbc:mysql://localhost:3306/reservation";
-        System.out.print("Enter you user name : ");
-        String userName = sc.next();
-        sc.nextLine();
-        System.out.print("Enter your password : ");
-        String password = sc.next();
-        sc.nextLine();
+        String userName = "root";
+        String password = "29344";
+        
 
         // loading driver
         Class.forName("com.mysql.jdbc.Driver");
@@ -66,7 +63,9 @@ public class ReservationSystem {
                         deleteReservation(st, pId);
                         System.out.println("");
                         break;
-
+                    case 6:
+                        exitSystem();
+                        return;
                     default:
                         System.out.println("Invalid Choice!!!, Try again.");
                         break;
@@ -79,6 +78,7 @@ public class ReservationSystem {
             System.out.println(e.getMessage());
         }
       sc.close();
+      System.exit(0);
       
     }
 
@@ -198,6 +198,15 @@ public class ReservationSystem {
             System.out.println("Failed to delete data");
         }
 
+    }
+    // exit from system
+    public static void exitSystem() throws InterruptedException{
+        System.out.print("Existing System");
+        for (int i = 0; i < 7; i++) {
+            System.out.print(". ");
+            Thread.sleep(300);   
+        }
+        System.out.println("\nTHANK YOU FOR USING GUEST HOUSE");
     }
 
 }
