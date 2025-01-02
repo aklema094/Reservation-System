@@ -36,13 +36,39 @@ public class ReservationSystem {
                 System.out.print("Choose an option : ");
                 int choice = sc.nextInt();
                 sc.nextLine();
-
+                switch(choice){
+                    case 1:
+                        reserveRoom(st,sc);
+                        break;
+                        
+                    default :
+                        System.out.println("Invalid Choice!!!, Try again.");
+                        break;
+                }
             }
 
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
 
+    }
+    
+    public static void reserveRoom(Statement st, Scanner sc) throws SQLException{
+        
+        System.out.print("Enter your name : ");
+        String name = sc.nextLine();
+        System.out.print("Enter your room number : ");
+        int room = sc.nextInt();
+        System.out.print("Enter your Contact Number : ");
+        int contact = sc.nextInt();
+        String query = "INSERT INTO reservationn(name,roomNo,contactNo) VALUES('"+name+"','"+room+"','"+contact+"');";
+        int affectedRows = st.executeUpdate(query);
+        if(affectedRows>0){
+            System.out.println("Data added successfully");
+        }else{
+            System.out.println("Failed to add data");
+        }
+          
     }
 
 }
